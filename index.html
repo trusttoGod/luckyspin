@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============ SEO DASAR ============
+     Ganti "https://ganti-domain-kamu.vercel.app/" di bawah
+     dengan domain asli setelah deploy ke Vercel.
+==================================== -->
+<title>Roda Undian Piala Dunia 2026 - Spin Wheel Tim Sepak Bola Online</title>
+<meta name="description" content="Roda undian online bertema Piala Dunia 2026. Tambah, edit, dan putar tim sepak bola favoritmu secara gratis - cocok untuk kuis, giveaway, atau nonton bareng.">
+<meta name="keywords" content="roda undian, spin wheel, piala dunia 2026, wheel of names, undian tim bola, random picker">
+<meta name="author" content="Gung Bek">
+<link rel="canonical" href="https://ganti-domain-kamu.vercel.app/">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (tampilan saat link dishare di WhatsApp/Facebook/dll) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Roda Undian Piala Dunia 2026">
+<meta property="og:description" content="Putar roda undian bertema Piala Dunia 2026 - tambah tim sendiri, lalu spin!">
+<meta property="og:url" content="https://ganti-domain-kamu.vercel.app/">
+<meta property="og:image" content="https://ganti-domain-kamu.vercel.app/assets/og-image.png">
+<meta property="og:locale" content="id_ID">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roda Undian Piala Dunia 2026">
+<meta name="twitter:description" content="Putar roda undian bertema Piala Dunia 2026 - tambah tim sendiri, lalu spin!">
+<meta name="twitter:image" content="https://ganti-domain-kamu.vercel.app/assets/og-image.png">
+
+<!-- Ikon tab browser -->
+<link rel="icon" type="image/png" href="assets/favicon.png">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Structured data untuk Google (opsional tapi membantu) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Roda Undian Piala Dunia 2026",
+  "applicationCategory": "Entertainment",
+  "operatingSystem": "Any",
+  "url": "https://ganti-domain-kamu.vercel.app/",
+  "description": "Roda undian online bertema Piala Dunia 2026 untuk memilih tim secara acak.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "IDR"
+  }
+}
+</script>
+</head>
+<body>
+
+<div class="floodlight fl-1"></div>
+<div class="floodlight fl-2"></div>
+<div class="pitch-lines"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">⚽</span>
+    <span class="brand-text">
+      <strong>GOL!</strong><span>SPIN</span>
+    </span>
+  </div>
+  <h1 class="brand-tag">Roda Undian Piala Dunia 2026</h1>
+</header>
+
+<main class="layout">
+
+  <!-- WHEEL SIDE -->
+  <section class="wheel-panel">
+
+    <div class="wheel-area">
+      <div class="wheel-glow"></div>
+      <div class="pointer">⚽</div>
+      <canvas id="wheel" width="460" height="460"></canvas>
+      <button id="centerSpin" class="center-btn" aria-label="Putar roda">
+        <span>PUTAR</span>
+      </button>
+    </div>
+
+    <button id="spinBtn" class="spin-btn">
+      <span class="ball-icon">⚽</span> Putar Roda
+    </button>
+
+    <div class="scoreboard">
+      <div class="score-box">
+        <small>TIM TERSISA</small>
+        <h2 id="teamLeft" class="digits">0</h2>
+      </div>
+      <div class="score-box">
+        <small>TOTAL DIUNDI</small>
+        <h2 id="totalPicked" class="digits">0</h2>
+      </div>
+      <div class="score-box">
+        <small>UNDIAN TERAKHIR</small>
+        <h2 id="history">-</h2>
+      </div>
+    </div>
+
+    <div class="ticker-wrap">
+      <div class="ticker-label">LIVE TICKER</div>
+      <ul id="tickerList" class="ticker-list">
+        <li class="ticker-empty">Belum ada undian &mdash; tekan Putar Roda</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- CONTROL SIDE -->
+  <aside class="control-panel">
+
+    <div class="panel-card">
+      <div class="panel-head">
+        <h3>Daftar Tim</h3>
+        <span id="listCount" class="count-pill">0</span>
+      </div>
+
+      <form id="addForm" class="add-form">
+        <input id="teamInput" type="text" placeholder="Tambah nama tim… (mis. Jepang)" maxlength="24" autocomplete="off">
+        <button type="submit" class="add-btn" aria-label="Tambah tim">+</button>
+      </form>
+
+      <div class="quick-row">
+        <button id="loadPreset" class="ghost-btn" type="button">Muat Contoh Tim</button>
+        <button id="clearList" class="ghost-btn ghost-danger" type="button">Kosongkan</button>
+      </div>
+
+      <ul id="teamList" class="team-list"></ul>
+    </div>
+
+    <div class="panel-card options-card">
+      <label class="toggle-row">
+        <span>Hapus tim setelah menang</span>
+        <input type="checkbox" id="removeOnWin" checked>
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+
+      <button id="resetBtn" class="reset-btn" type="button">🔄 Reset Undian</button>
+    </div>
+
+  </aside>
+
+</main>
+
+<!-- WINNER POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-card">
+    <div class="confetti" aria-hidden="true"></div>
+    <div class="trophy">🏆</div>
+    <span class="popup-eyebrow">TIM TERPILIH</span>
+    <h1 id="winner">—</h1>
+    <button id="playAgain">Lanjutkan</button>
+  </div>
+</div>
+
+<!-- FINISH POPUP -->
+<div id="finishPopup" class="popup">
+  <div class="popup-card">
+    <div class="trophy">⚽</div>
+    <span class="popup-eyebrow">PERTANDINGAN SELESAI</span>
+    <h1 class="finish-title">Semua Tim Sudah Diundi</h1>
+    <p>Tekan Reset untuk mengulang undian dari awal.</p>
+    <button id="closeFinish">Tutup</button>
+  </div>
+</div>
+
+<!-- EMPTY WARNING POPUP -->
+<div id="emptyPopup" class="popup">
+  <div class="popup-card">
+    <div class="trophy">📋</div>
+    <span class="popup-eyebrow">DAFTAR KOSONG</span>
+    <h1 class="finish-title">Tambahkan Tim Dulu</h1>
+    <p>Isi minimal 2 tim di panel kanan sebelum memutar roda.</p>
+    <button id="closeEmpty">Mengerti</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

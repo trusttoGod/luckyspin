@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ganti-domain-kamu.vercel.app/sitemap.xml
